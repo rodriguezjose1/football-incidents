@@ -1,0 +1,20 @@
+{
+  "name": "football-incidents",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch --env-file=.env index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.0.1",
+    "http-errors": "^2.0.0",
+    "http-status-codes": "^2.3.0",
+    "mongoose": "^8.3.1"
+  }
+}
