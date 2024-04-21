@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { matchRules } = require('./validator');
+const { matchRules, matchRulesPutTime, matchRulesGet } = require('./validator');
 const handleValidationErrors = require('../../middleware/validationErrorHandler');
-const { createMatch, finishMatch } = require('./matches.controller');
+const { createMatch, finishTime, getById } = require('./matches.controller');
 
 // Ruta para crear un nuevo partido
 router.post('/create', matchRules, handleValidationErrors, createMatch);
-
-// Ruta para obtener todos los partidos
-router.put('/:id/finish', finishMatch);
+router.put('/:id/time', matchRulesPutTime, handleValidationErrors, finishTime);
+router.get('/:id', matchRulesGet, handleValidationErrors, getById);
 
 module.exports = router;

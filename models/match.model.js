@@ -8,6 +8,8 @@ const MatchSchema = new Schema({
     awayTeam: { type: mongoose.Types.ObjectId, ref: 'Team', required: true },
     homeTeamGoals: { type: Number, required: true },
     awayTeamGoals: { type: Number, required: true },
+    secondsFirstTime: { type: Number, required: true, default: 0 },
+    secondsSecondTime: { type: Number, required: true, default: 0 },
     finished: { type: Boolean, default: false, required: true },
 }, { timestamps: true });
 

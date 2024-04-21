@@ -19,11 +19,12 @@ const IncidentSchema = new Schema({
     detail: { type: String }, // Detalle de la incidencia (cabeza, pie, etc.)
     origin: { type: String }, // Origen de la incidencia (tiro libre, tiro de esquina, etc.)
     minute: { type: Number, required: true },
-    player: { type: Player },
+    player: { type: Player, default: null },
     team: { type: Team, required: true },
     reason: { type: String }, // Motivo de la incidencia (solo para tarjetas)
-    replacementIn: { type: String }, // Jugador que entra (solo para sustituciones)
-    replacementOut: { type: String } // Jugador que sale (solo para sustituciones)
+    replacementIn: { type: Player }, // Jugador que entra (solo para sustituciones)
+    replacementOut: { type: Player }, // Jugador que sale (solo para sustituciones)
+    assistance: { type: Player, default: null, ref: 'Player' } // Asistencia asociada al gol
 }, { timestamps: true });
 
 module.exports = mongoose.model('Incident', IncidentSchema)

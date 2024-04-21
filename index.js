@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
+
 const { connect } = require('./db/connection');
 
 const app = express();
@@ -16,6 +18,8 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(morgan('dev'));
 
 app.use('/matches', matchRoutes);
 app.use('/incidents', incidentRoutes);
