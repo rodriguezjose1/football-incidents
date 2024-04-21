@@ -9,7 +9,7 @@ const createMatch = async (req, res, next) => {
 
         const match = req.body;
         const newMatch = await Match.create(match);
-        res.status(200).json({ message: 'Match created', match: newMatch });
+        return res.status(200).json({ message: 'Match created', match: newMatch });
     } catch (error) {
         next(error);
     }
@@ -29,7 +29,7 @@ const finishTime = async (req, res, next) => {
             await Match.findByIdAndUpdate(matchId, { $set: { secondsSecondTime: body.secondsSecondTime, finished: true } });
         }
 
-        res.status(200).json({ message: 'Match finished' });
+        return res.status(200).json({ message: 'Match finished' });
     } catch (error) {
         next(error);
     }
@@ -42,7 +42,7 @@ const getById = async (req, res, next) => {
         const match = await Match.findOne({ _id: req.params.id }).lean();
         if (!match) throw createHttpError(StatusCodes.BAD_REQUEST, 'MATCH_NOT_FOUND', 'Match not found');
 
-        res.status(200).json({ match });
+        return res.status(200).json({ match });
     } catch (error) {
         next(error);
     }

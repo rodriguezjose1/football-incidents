@@ -76,7 +76,7 @@ const createIncident = async (req, res, next) => {
 
     await Incident.create(newIncident);
 
-    res.status(200).json({ mensaje: 'Incidencia registrada correctamente' });
+    return res.status(200).json({ mensaje: 'Incidencia registrada correctamente' });
 
   } catch (error) {
     next(error);
@@ -88,7 +88,7 @@ const getIncidents = async (req, res, next) => {
     const { match } = req.params;
 
     const incidents = await Incident.find({ match }).lean();
-    res.status(200).json({ incidents});
+    return res.status(200).json({ incidents});
   } catch (error) {
     next(error);
   }
