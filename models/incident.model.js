@@ -3,13 +3,14 @@ const { default: mongoose, Schema } = require("mongoose")
 const Team = new Schema({
     id: { type: mongoose.Types.ObjectId, required: true, ref: 'Team' },
     name: { type: String, required: true },
-    code: { type: String, required: true }
+    code: { type: String, required: true },
+    type: { type: String, required: true }
 }, { _id: false });
 
 const Player = new Schema({
-    id: { type: mongoose.Types.ObjectId, required: true, ref: 'Player' },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true }
+    id: { type: mongoose.Types.ObjectId, required: false, default: null, ref: 'Player' },
+    firstName: { type: String, required: false },
+    lastName: { type: String, required: false }
 }, { _id: false });
 
 
@@ -20,7 +21,7 @@ const IncidentSchema = new Schema({
     origin: { type: String }, // Origen de la incidencia (tiro libre, tiro de esquina, etc.)
     minute: { type: Number, required: true },
     player: { type: Player, default: null },
-    team: { type: Team, required: true },
+    team: { type: Team, required: false, default: null },
     reason: { type: String }, // Motivo de la incidencia (solo para tarjetas)
     replacementIn: { type: Player }, // Jugador que entra (solo para sustituciones)
     replacementOut: { type: Player }, // Jugador que sale (solo para sustituciones)

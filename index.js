@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 3000;
 
 const matchRoutes = require('./src/matches/matches.routes');
 const incidentRoutes = require('./src/incidents/incidents.routes');
+const playerRoutes = require('./src/players/players.routes');
+const teamRoutes = require('./src/teams/teams.routes');
 
 const handleHttpError = require('./middleware/httpErrorHandler');
 const handleMongoError = require('./middleware/mongoErrorHandler');
@@ -23,6 +25,8 @@ app.use(morgan('dev'));
 
 app.use('/matches', matchRoutes);
 app.use('/incidents', incidentRoutes);
+app.use('/players', playerRoutes);
+app.use('/teams', teamRoutes);
 
 app.use(handleMongoError);
 app.use(handleHttpError);

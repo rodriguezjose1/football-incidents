@@ -1,5 +1,6 @@
 const createHttpError = require('http-errors');
 const Match = require('../../models/match.model');
+const Incident = require('../../models/incident.model');
 const { StatusCodes } = require('http-status-codes');
 
 const createMatch = async (req, res, next) => {
@@ -25,6 +26,7 @@ const finishTime = async (req, res, next) => {
 
         if (matchInProgress.secondsFirstTime === 0) {
             await Match.findByIdAndUpdate(matchId, { $set: { secondsFirstTime: body.secondsFirstTime } });
+            await Incident.create({ minute: body.secondsFirstTime, type: 'end_first_time', match: matchId });
         } else {
             await Match.findByIdAndUpdate(matchId, { $set: { secondsSecondTime: body.secondsSecondTime, finished: true } });
         }
@@ -39,7 +41,7 @@ const getById = async (req, res, next) => {
     try {
         const { id: matchId } = req.params
 
-        const match = await Match.findOne({ _id: req.params.id }).lean();
+        const match = await Match.findOne({ _id: matchId }).populate('homeTeam').populate('awayTeam').lean();
         if (!match) throw createHttpError(StatusCodes.BAD_REQUEST, 'MATCH_NOT_FOUND', 'Match not found');
 
         return res.status(200).json({ match });
@@ -48,4 +50,14 @@ const getById = async (req, res, next) => {
     }
 };
 
-module.exports = { createMatch, finishTime, getById };
+const getMatchInProgress = async (req, res, next) => {
+    try {
+        const match = await Match.findOne({ finished: false }).populate('homeTeam').populate('awayTeam').lean();
+
+        return res.status(200).json({ match });
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { createMatch, finishTime, getById, getMatchInProgress };
